@@ -1,7 +1,7 @@
 import math
 from datetime import date
 
-# 1. создаю словарь письма
+# 1. Создаю словарь письма
 
 email = {
     "subject": "Project meeting",
@@ -10,7 +10,7 @@ email = {
     "body": "Hi Daria! Reminder: meeting at 15:00. See you!"
 }
 
-# 2. создаю переменную с текущей датой в формате YYYY-MM-DD
+# 2. Создаю переменную с текущей датой в формате YYYY-MM-DD
 send_date = date.today().strftime("%Y-%m-%d")
 
 # добавляею дату в словарь
@@ -41,6 +41,14 @@ corporate_domains = [
     'company.ru', 'corporation.com', 'university.edu',
     'organization.org', 'company.org', 'business.net'
 ]
+
+# сделать списки уникальными, сохранив порядок
+personal_domains  = list(dict.fromkeys(personal_domains))
+corporate_domains = list(dict.fromkeys(corporate_domains))
+
+print("Личные домены без дублей:", personal_domains)
+print("Корпоративные домены без дублей:", corporate_domains)
+
 
 # 7. Проверяю, что нет пересечений
 intersection = set(personal_domains) & set(corporate_domains)
@@ -73,3 +81,29 @@ print(email["sent_text"])
 pages = math.ceil(len(email["sent_text"]) / 500)
 
 print("Количество страниц:", pages)
+
+# 12. Проверяю пустоту темы и тела письма
+is_subject_empty = not email["subject"]
+is_body_empty = not email["body"]
+
+print("Пустая тема письма:", is_subject_empty)
+print("Пустое тело письма:", is_body_empty)
+
+# 13. Создаю «маску» e-mail отправителя
+sender = email["from"]  # Беру адрес отправителя
+login, domain = sender.split("@")  # Разделяю логин и домен по символу "@"
+email["masked_from"] = login[:2] + "***@" + domain  # Беру первые 2 буквы логина и добавляю маску
+
+print("Маска отправителя:", email["masked_from"])
+
+# 14. Удаляю из списка личных доменов значения "list.ru" и "bk.ru"'
+if "list.ru" in personal_domains:
+    personal_domains.remove("list.ru")
+if "bk.ru" in personal_domains:
+    personal_domains.remove("bk.ru")
+
+print("Личные домены:", personal_domains)
+
+# Финальные принты для проверки
+print(email)
+print(is_corporate, is_subject_empty, is_body_empty, pages)
