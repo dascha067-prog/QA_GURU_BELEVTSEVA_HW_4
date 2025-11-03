@@ -83,15 +83,14 @@ pages = math.ceil(len(email["sent_text"]) / 500)
 print("Количество страниц:", pages)
 
 # 12. Проверяю пустоту темы и тела письма
-is_subject_empty = not email["subject"]
-is_body_empty = not email["body"]
+is_subject_empty = not email["subject"].strip()
+is_body_empty = not email["body"].strip()
 
 print("Пустая тема письма:", is_subject_empty)
 print("Пустое тело письма:", is_body_empty)
 
 # 13. Создаю «маску» e-mail отправителя
 sender = email["from"]  # Беру адрес отправителя
-login, domain = sender.split("@")  # Разделяю логин и домен по символу "@"
 email["masked_from"] = login[:2] + "***@" + domain  # Беру первые 2 буквы логина и добавляю маску
 
 print("Маска отправителя:", email["masked_from"])
